@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 import { handleError, throwNewGraphqlError } from '@/error/error';
 import { OutputErrorEnum, OutputErrorMsg } from '@/error/error.types';
 import * as bcrypt from 'bcrypt';
+import { LessonEntity } from '@/lesson/lesson.entity';
 
 @Injectable()
 export class StudentService {
@@ -27,8 +28,8 @@ export class StudentService {
       });
       if (!student) {
         throwNewGraphqlError({
-          message: OutputErrorMsg.NOT_FOUND,
-          code: OutputErrorEnum.NOT_FOUND,
+          message: OutputErrorMsg.USER_NOT_FOUND,
+          code: OutputErrorEnum.USER_NOT_FOUND,
         });
       }
       return student;
@@ -72,5 +73,13 @@ export class StudentService {
     } catch (error) {
       handleError(error);
     }
+  }
+
+  async syncStudentToNewLesson(studentId: string, newLesson: LessonEntity) {
+    const student = await this.studentRepository.findOne({
+      where: { id: studentId },
+    });
+    student.lessons.push(newLesson);
+    return this.studentRepository.save(student);
   }
 }

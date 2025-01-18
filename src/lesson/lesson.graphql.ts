@@ -9,7 +9,7 @@ export class Lesson {
   name: string;
 
   @Field(() => String)
-  ownerId: string;
+  studentId: string;
 
   @Field(() => String)
   startDate: string;

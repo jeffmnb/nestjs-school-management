@@ -12,8 +12,8 @@ export class LessonResolver {
 
   @UseGuards(NSMAuthGuard)
   @Query(() => [Lesson])
-  getLessons(): Promise<Lesson[]> {
-    return this.lessonService.getLessons();
+  getLessons(@GetAuth() studentId): Promise<Lesson[]> {
+    return this.lessonService.getLessons(studentId);
   }
 
   @UseGuards(NSMAuthGuard)

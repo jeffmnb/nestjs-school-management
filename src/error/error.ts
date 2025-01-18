@@ -40,6 +40,11 @@ export const handleError = (error: GraphQLError | TypeORMError) => {
           extensions: { code: OutputErrorEnum.CHECK_LOGIN_CREDENTIALS },
         });
 
+      case OutputErrorMsg.USER_NOT_FOUND:
+        throw new GraphQLError(OutputErrorMsg.USER_NOT_FOUND, {
+          extensions: { code: OutputErrorEnum.USER_NOT_FOUND },
+        });
+
       default:
         throw new GraphQLError(OutputErrorMsg.UNKNOWN_ERROR, {
           extensions: { code: OutputErrorEnum.UNKNOWN_ERROR },

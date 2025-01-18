@@ -18,5 +18,5 @@ export class LessonEntity {
   endDate: string;
 
   @Column()
-  ownerId: string;
+  studentId: string;
 }

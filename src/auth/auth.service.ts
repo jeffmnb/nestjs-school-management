@@ -24,8 +24,8 @@ export class AuthService {
       });
       if (!student) {
         throwNewGraphqlError({
-          message: OutputErrorMsg.NOT_FOUND,
-          code: OutputErrorEnum.NOT_FOUND,
+          message: OutputErrorMsg.USER_NOT_FOUND,
+          code: OutputErrorEnum.USER_NOT_FOUND,
         });
       }
 
