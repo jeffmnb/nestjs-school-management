@@ -14,7 +14,7 @@ import { ConfigModule } from '@nestjs/config';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRES },
+      signOptions: { expiresIn: process.env.JWT_EXPIRES || 3600 },
     }),
     TypeOrmModule.forFeature([StudentEntity]),
   ],
