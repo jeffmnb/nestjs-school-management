@@ -13,4 +13,10 @@ export class CreateStudentInput {
 
   @Field(() => Int)
   age: number;
+
+  @Field(() => String)
+  email: string;
+
+  @Field(() => String)
+  password: string;
 }

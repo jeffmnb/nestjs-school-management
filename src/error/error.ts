@@ -30,6 +30,16 @@ export const handleError = (error: GraphQLError | TypeORMError) => {
           extensions: { code: OutputErrorEnum.NOT_FOUND },
         });
 
+      case OutputErrorMsg.EMAIL_ALREADY_EXISTS:
+        throw new GraphQLError(OutputErrorMsg.EMAIL_ALREADY_EXISTS, {
+          extensions: { code: OutputErrorEnum.EMAIL_ALREADY_EXISTS },
+        });
+
+      case OutputErrorMsg.CHECK_LOGIN_CREDENTIALS:
+        throw new GraphQLError(OutputErrorMsg.CHECK_LOGIN_CREDENTIALS, {
+          extensions: { code: OutputErrorEnum.CHECK_LOGIN_CREDENTIALS },
+        });
+
       default:
         throw new GraphQLError(OutputErrorMsg.UNKNOWN_ERROR, {
           extensions: { code: OutputErrorEnum.UNKNOWN_ERROR },

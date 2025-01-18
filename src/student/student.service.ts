@@ -7,6 +7,7 @@ import { StudentEntity } from './student.entity';
 import { v4 as uuid } from 'uuid';
 import { handleError, throwNewGraphqlError } from '@/error/error';
 import { OutputErrorEnum, OutputErrorMsg } from '@/error/error.types';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class StudentService {
@@ -36,13 +37,35 @@ export class StudentService {
     }
   }
 
+  async validateStudentExists(email: string): Promise<void> {
+    try {
+      const student = await this.studentRepository.findOne({
+        where: { email },
+      });
+      if (student) {
+        throwNewGraphqlError({
+          message: OutputErrorMsg.EMAIL_ALREADY_EXISTS,
+          code: OutputErrorEnum.EMAIL_ALREADY_EXISTS,
+        });
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
   async createStudent(input: CreateStudentInput): Promise<Student> {
     try {
-      const { age, name } = input;
+      const { age, name, password, email } = input;
+      await this.validateStudentExists(email);
+      const salt = await bcrypt.genSalt();
+      const passwordHashed = await bcrypt.hash(password, salt);
+
       const student = this.studentRepository.create({
         id: uuid(),
         age,
         name,
+        password: passwordHashed,
+        email,
         lessons: [],
       });
       return await this.studentRepository.save(student);

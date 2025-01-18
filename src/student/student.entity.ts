@@ -16,5 +16,11 @@ export class StudentEntity {
   age: number;
 
   @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column()
   lessons: LessonEntity[];
 }

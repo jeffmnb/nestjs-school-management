@@ -9,6 +9,9 @@ export class Lesson {
   name: string;
 
   @Field(() => String)
+  ownerId: string;
+
+  @Field(() => String)
   startDate: string;
 
   @Field(() => String)

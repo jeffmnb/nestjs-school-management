@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessonEntity } from './lesson.entity';
 import { Repository } from 'typeorm';
@@ -7,6 +7,7 @@ import { Lesson } from './lesson.graphql';
 import { v4 as uuid } from 'uuid';
 import { handleError, throwNewGraphqlError } from '@/error/error';
 import { OutputErrorEnum, OutputErrorMsg } from '@/error/error.types';
+import { NSMAuthGuard } from '@/auth/auth.guard';
 
 @Injectable()
 export class LessonService {
@@ -15,6 +16,7 @@ export class LessonService {
     private lessonRepository: Repository<LessonEntity>,
   ) {}
 
+  @UseGuards(NSMAuthGuard)
   async getLessons(): Promise<Lesson[]> {
     return await this.lessonRepository.find();
   }
@@ -35,12 +37,17 @@ export class LessonService {
     }
   }
 
-  async createLesson(input: CreateLessonInput): Promise<Lesson> {
+  @UseGuards(NSMAuthGuard)
+  async createLesson(
+    input: CreateLessonInput,
+    studentId: string,
+  ): Promise<Lesson> {
     try {
       const { name, startDate, endDate } = input;
       const lesson = this.lessonRepository.create({
         id: uuid(),
         name,
+        ownerId: studentId,
         startDate,
         endDate,
       });

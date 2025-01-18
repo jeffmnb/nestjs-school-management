@@ -12,6 +12,9 @@ export class Student {
   @Field(() => Number)
   age: number;
 
-  @Field(() => [Lesson])
-  lessons: Lesson[];
+  @Field(() => String)
+  email: string;
+
+  @Field(() => [Lesson], { nullable: true })
+  lessons?: Lesson[];
 }
