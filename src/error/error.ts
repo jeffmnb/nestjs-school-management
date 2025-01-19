@@ -45,6 +45,16 @@ export const handleError = (error: GraphQLError | TypeORMError) => {
           extensions: { code: OutputErrorEnum.USER_NOT_FOUND },
         });
 
+      case OutputErrorMsg.REFRESH_EXPIRED_TOKEN:
+        throw new GraphQLError(OutputErrorMsg.REFRESH_EXPIRED_TOKEN, {
+          extensions: { code: OutputErrorEnum.REFRESH_EXPIRED_TOKEN },
+        });
+
+      case OutputErrorMsg.INVALID_EXPIRED_TOKEN:
+        throw new GraphQLError(OutputErrorMsg.INVALID_EXPIRED_TOKEN, {
+          extensions: { code: OutputErrorEnum.INVALID_EXPIRED_TOKEN },
+        });
+
       default:
         throw new GraphQLError(OutputErrorMsg.UNKNOWN_ERROR, {
           extensions: { code: OutputErrorEnum.UNKNOWN_ERROR },

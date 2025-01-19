@@ -8,3 +8,9 @@ export class SignInInput {
   @Field(() => String)
   password: string;
 }
+
+@InputType('NSM_RefreshTokenInput')
+export class RefreshTokenInput {
+  @Field(() => String)
+  refresh_token: string;
+}
